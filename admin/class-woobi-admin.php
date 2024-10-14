@@ -84,7 +84,7 @@ class Woobi_Admin{
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woobi-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woobi-admin.css', array( 'wp-components', 'wp-edit-blocks'), $this->version, 'all' );
 
 	}
 
@@ -193,6 +193,9 @@ class Woobi_Admin{
             <h1 class="wp-heading-inline"><?php echo __( 'WooBI', 'woobi' ) ?></h1>
             <hr class="wp-header-end">
             <h2 class="screen-reader-text"><?php _e( 'Filter cron jobs list', 'woobi' ) ?></h2>
+
+            <div id="app"></div>
+            <br>
 			<?php echo $pivot->render() ?>
         </div>
 
@@ -209,6 +212,15 @@ class Woobi_Admin{
 		if ( ! current_user_can( $this->capability ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'woobi' ) );
 		}
+
+		$block_path = '../build/index.js';
+		wp_enqueue_script(
+			$this->plugin_name,
+			plugin_dir_url( __FILE__ ) . $block_path,
+			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ],
+			filemtime( plugin_dir_path( __FILE__ ) . $block_path ),
+            true
+		);
 
 //		//enqueue styles
 //		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woobi-admin.css', array(), $this->version, 'all' );

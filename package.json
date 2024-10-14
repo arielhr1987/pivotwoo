@@ -1,0 +1,38 @@
+{
+  "name": "woobi",
+  "version": "1.0.0",
+  "description": "Bring business intelligence to your Woocommerce store",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/wp-scripts start",
+    "build": "node_modules/.bin/wp-scripts build",
+    "packages-update": "node_modules/.bin/wp-scripts packages-update",
+    "check-licenses": "node_modules/.bin/wp-scripts check-licenses",
+    "lint:css": "node_modules/.bin/wp-scripts lint-style",
+    "lint:js": "node_modules/.bin/wp-scripts lint-js",
+    "lint:pkg-json": "node_modules/.bin/wp-scripts lint-pkg-json",
+    "test:e2e": "node_modules/.bin/wp-scripts test-e2e",
+    "test:unit": "node_modules/.bin/wp-scripts test-unit-js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arielhr1987/woobi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arielhr1987/woobi/issues"
+  },
+  "homepage": "https://github.com/arielhr1987/woobi#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^23.2.0"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.0.3",
+    "@dnd-kit/sortable": "^7.0.0",
+    "@wordpress/components": "^19.12.0",
+    "react-sortablejs": "^6.1.4",
+    "sortablejs": "^1.15.0"
+  }
+}
