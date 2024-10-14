@@ -84,7 +84,7 @@ class Woobi_Admin{
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woobi-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url(__FILE__).'css/woobi-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -108,7 +108,7 @@ class Woobi_Admin{
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woobi-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url(__FILE__).'js/woobi-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -146,16 +146,16 @@ class Woobi_Admin{
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'woobi' ) );
 		}
 
-		require_once __DIR__ . '/../includes/class-woobi-pivot.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-dimension.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-measure.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-measure-sum.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-data-source.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-query-builder.php';
-		require_once __DIR__ . '/../includes/class-woobi-tree-node.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-header.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-header-row.php';
-		require_once __DIR__ . '/../includes/class-woobi-pivot-header-column.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-dimension.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-measure.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-measure-sum.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-data-source.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-query-builder.php';
+		require_once __DIR__.'/../includes/class-woobi-tree-node.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-header.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-header-row.php';
+		require_once __DIR__.'/../includes/class-woobi-pivot-header-column.php';
 
 		$pivot = new Woobi_Pivot();
 

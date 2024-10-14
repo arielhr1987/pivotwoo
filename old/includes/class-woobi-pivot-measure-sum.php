@@ -26,7 +26,7 @@ class Woobi_Pivot_Measure_Sum extends Woobi_Pivot_Measure{
 	protected $text;
 
 	/**
-	 * The field to to use in queries
+	 * The field to use in queries
 	 *
 	 * @var string
 	 */

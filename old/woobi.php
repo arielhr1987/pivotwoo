@@ -42,7 +42,7 @@ define( 'WOOBI_VERSION', '1.0.0' );
  * This action is documented in includes/class-woobi-activator.php
  */
 function activate_woobi() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woobi-activator.php';
+	require_once plugin_dir_path(__FILE__).'includes/class-woobi-activator.php';
 	Woobi_Activator::activate();
 }
 
@@ -51,7 +51,7 @@ function activate_woobi() {
  * This action is documented in includes/class-woobi-deactivator.php
  */
 function deactivate_woobi() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woobi-deactivator.php';
+	require_once plugin_dir_path(__FILE__).'includes/class-woobi-deactivator.php';
 	Woobi_Deactivator::deactivate();
 }
 
@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, 'deactivate_woobi' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-woobi.php';
+require plugin_dir_path(__FILE__).'includes/class-woobi.php';
 
 /**
  * Begins execution of the plugin.

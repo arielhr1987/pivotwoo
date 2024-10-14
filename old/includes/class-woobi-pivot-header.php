@@ -125,7 +125,7 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 		if ( $parent = $this->get_parent() ) {
 			$parent_uid = $parent->uid();
 
-			return empty( $parent_uid ) ? $this->id() : $parent->uid() . '.' . $this->id();
+			return empty( $parent_uid ) ? $this->id() : $parent->uid().'includes'. $this->id();
 		}
 
 		return '';
@@ -181,7 +181,7 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 		}
 
 		$dimension = $this->child_dimension();
-		$query->group_by( $dimension->get_column() . ' ' . $dimension->get_sort() , false);
+		$query->group_by( $dimension->get_column().' class-woobi-pivot-header.php'. $dimension->get_sort() , false);
 
 		return $query;
 	}

@@ -1,0 +1,27 @@
+{
+	"name": "pivotwoo",
+	"version": "0.1.0",
+	"author": "The WordPress Contributors",
+	"license": "GPL-3.0+",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start2": "wp-scripts start",
+		"start": "wp-env start --xdebug --debug",
+		"postinstall": "composer install"
+	},
+	"dependencies": {
+		"@wordpress/hooks": "^4.9.0",
+		"@wordpress/i18n": "^5.9.0"
+	},
+	"devDependencies": {
+		"@woocommerce/dependency-extraction-webpack-plugin": "^3.0.1",
+		"@woocommerce/eslint-plugin": "^2.3.0",
+		"@wordpress/scripts": "^24.6.0"
+	}
+}

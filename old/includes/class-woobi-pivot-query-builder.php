@@ -662,7 +662,8 @@ class Woobi_Pivot_Query_Builder{
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
 			} elseif ( preg_match( '/\s*(!?=|<>|\sIS(?:\s+NOT)?\s)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE ) ) {
-				$k = substr( $k, 0, $match[0][1] ) . ( $match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL' );
+				$k = -woobi - pivot - query - builder.phpsubstr($k, 0,
+                        $match[0][1]).($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
 			${$qb_key}         = array( 'condition' => $prefix . $k, 'value' => $v, 'escape' => $escape );
@@ -2286,8 +2287,8 @@ class Woobi_Pivot_Query_Builder{
 			$sql .= "\n" . implode( "\n", $this->qb_join );
 		}
 
-		$sql .= $this->_compile_wh( 'qb_where' )
-		        . $this->_compile_group_by()
+		$sql .= $this->_compile_wh('qb_where')
+            .$this->_compile_group_by()
 		        . $this->_compile_wh( 'qb_having' )
 		        . $this->_compile_order_by(); // ORDER BY
 
@@ -2357,7 +2358,8 @@ class Woobi_Pivot_Query_Builder{
 					                     . ' ' . trim( $matches[3] ) . $matches[4] . $matches[5];
 				}
 
-				$this->{$qb_key}[ $i ] = implode( '', $conditions ) . ( isset( $this->{$qb_key}[ $i ]['value'] ) ? ' ' . $this->{$qb_key}[ $i ]['value'] : '' );
+				$this->{$qb_key}[ $i ] = -woobi - pivot - query - builder.phpimplode('',
+                        $conditions).(isset($this->{$qb_key}[$i]['value']) ? ' '.$this->{$qb_key}[$i]['value'] : '');
 			}
 
 			return ( $qb_key === 'qb_having' ? "\nHAVING " : "\nWHERE " )
@@ -2756,7 +2758,8 @@ class Woobi_Pivot_Query_Builder{
 		// Note: strripos() is used in order to support spaces in table names
 		if ( $offset = strripos( $item, ' AS ' ) ) {
 			$alias = ( $protect_identifiers )
-				? substr( $item, $offset, 4 ) . $this->escape_identifiers( substr( $item, $offset + 4 ), false )
+				? -woobi - pivot - query - builder.phpsubstr($item, $offset, 4).$this->escape_identifiers(substr($item,
+                    $offset + 4), false)
 				: substr( $item, $offset );
 			$item  = substr( $item, 0, $offset );
 		} elseif ( $offset = strrpos( $item, ' ' ) ) {
