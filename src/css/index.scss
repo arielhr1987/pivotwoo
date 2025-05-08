@@ -1,0 +1,138 @@
+$border-color: #e2e4e7;
+
+.pivot-grid {
+	background-color: #fff;
+	font-size: .8125rem;
+	color: rgb(30, 30, 30);
+
+	.table {
+		table-layout: auto;
+		border-collapse: collapse;
+		width: 100%;
+
+		> thead,
+		> tbody {
+
+			> tr {
+				white-space: nowrap;
+
+				> td,
+				> th {
+					padding: 0;
+					border-color: $border-color;
+					border-style: solid;
+					border-width: 0 1px 1px 0;
+					height: 37px; //Important to force div expand full height
+
+					&:last-child {
+						border-right-width: 0;
+					}
+				}
+
+				&:last-child {
+					> td,
+					> th {
+						border-bottom-width: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.table-axis {
+		tr {
+			white-space: nowrap;
+
+			th,
+			td {
+				vertical-align: top;
+
+				> div {
+					height: 100%;
+					padding: 8px;
+				}
+			}
+		}
+	}
+
+	.table-axis-column {
+		tbody {
+			tr {
+				td {
+					&:not([colspan]),
+					&[colspan="1"] {
+						border-bottom-width: 0;
+					}
+
+					&:last-child {
+						border-right-width: 1px;
+					}
+				}
+			}
+
+			tr:first-child {
+				> td:last-child {
+					border-right-width: 0;
+				}
+			}
+		}
+	}
+
+	.table-axis-row {
+		tbody {
+			tr {
+				td:last-child {
+					border-right-width: 0;
+				}
+			}
+
+			tr:last-child {
+				> td {
+					border-bottom-width: 0;
+				}
+			}
+		}
+	}
+
+	.table-borderless {
+		> thead,
+		> tbody {
+			> tr {
+				> th,
+				> td {
+					border: none;
+				}
+			}
+		}
+	}
+
+	.table-hover {
+		> thead,
+		> tbody {
+			> tr {
+				&:hover {
+					background-color: #e0e0e0;
+				}
+			}
+		}
+	}
+
+	.table-bordered {
+		> thead,
+		> tbody {
+			> tr {
+				> td:not(:last-child) {
+					border-right: 1px solid #e2e4e7;
+				}
+			}
+		}
+	}
+
+	.table-striped {
+
+	}
+
+
+}
+
+

@@ -13,7 +13,9 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start2": "wp-scripts start",
 		"start": "wp-env start --xdebug --debug",
-		"postinstall": "composer install"
+		"composer": "wp-env run cli --env-cwd=wp-content/plugins/pivotwoo composer",
+		"postinstall": "composer install",
+		"tests": "wp-env run cli --debug --env-cwd=wp-content/plugins/pivotwoo ./vendor/bin/phpunit"
 	},
 	"dependencies": {
 		"@wordpress/hooks": "^4.9.0",

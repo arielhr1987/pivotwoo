@@ -102,8 +102,8 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 
 	/**
 	 * Returns the id of this header
-	 * An id is unique among siblings as we use a SELECT DISTINCT
-	 * i.e. fn89a7nd8an08d78f7ad
+	 * An id is unique among siblings as we use a SELECT DISTINCT,
+	 * for example, fn89a7nd8an08d78f7ad
 	 *
 	 * @return string
 	 * @since 1.0.0
@@ -116,7 +116,7 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 	 * Returns the unique id of this node.
 	 * A unique id (uid) identifies a node uniquely in the tree
 	 * Is calculated by concatenating the parent uid, a dot "." and the current id
-	 * i.e. fn89a7nd8an08d78f7ad-98as7da89sda8sd9as7d
+	 * for example, fn89a7nd8an08d78f7ad-98as7da89sda8sd9as7d
 	 *
 	 * @return string
 	 * @since 1.0.0
@@ -133,7 +133,7 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 
 	/**
 	 * Recursive method to traverse node hierarchy and generate sql SELECT clause.
-	 * i.e. `country` AS 'country', 'city` AS 'city'
+	 * For example, `country` AS 'country', 'city` AS 'city'
 	 *
 	 * @param Woobi_Pivot_Query_Builder $query
 	 *
@@ -151,8 +151,8 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 	}
 
 	/**
-	 * Recursive method to traverse node hierarchy and generate sql WHERE clause
-	 * i.e. (`country` = 'USA' AND 'city` = 'Boston')
+	 * Recursive method to traverse node hierarchy and generate SQL WHERE clause,
+	 * for example (`country` = 'USA' AND 'city` = 'Boston')
 	 * where country and city are dimensions
 	 *
 	 * @param Woobi_Pivot_Query_Builder $query
@@ -207,7 +207,7 @@ class Woobi_Pivot_Header extends Woobi_Tree_Node{
 	}
 
 	/**
-	 * Process current node recursively.
+	 * Process the current node recursively.
 	 *
 	 * @since 1.0.0
 	 */

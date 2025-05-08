@@ -119,4 +119,7 @@ function pivotwoo_init() {
 
 	Pivotwoo::instance();
 
+	require_once __DIR__ . '/tests/TestPivot.php';
+	$test = new TestPivot();
+	$test->testAxisExpand();
 }

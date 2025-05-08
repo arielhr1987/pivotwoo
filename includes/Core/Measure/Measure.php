@@ -1,9 +1,9 @@
 <?php
 
-namespace Pivotwoo\Core;
+namespace Pivotwoo\Core\Measure;
 
 /**
- * Class Pivotwoo\Cor\Measure
+ * Class Pivotwoo\Core\Measure
  *
  * Base class that represents a measure
  *
@@ -25,7 +25,7 @@ class Measure
 	 * @var string
 	 * @since 0.1.0
 	 */
-	protected $display_name;
+	protected $displayName;
 
 	/**
 	 * The field to use in queries
@@ -43,22 +43,34 @@ class Measure
 	protected $aggregator = 'SUM';
 
 	/**
+	 * Class constructor.
+	 *
+	 * @param string $name
+	 */
+	public function __construct($name)
+	{
+		$this->name        = $name;
+		$this->displayName = $name;
+		$this->column      = $name;
+	}
+
+	/**
 	 * @return string
 	 */
-	public function get_name(): string
+	public function getName(): string
 	{
 		return $this->name;
 	}
 
 	/**
-	 * Get measure display name
+	 * Get the measure display name
 	 *
 	 * @return string
 	 * @since 0.1.0
 	 */
-	public function get_display_name()
+	public function getDisplayName()
 	{
-		return $this->display_name;
+		return $this->displayName;
 	}
 
 	/**
@@ -67,7 +79,7 @@ class Measure
 	 * @return string
 	 * @since 0.1.0
 	 */
-	public function get_column()
+	public function getColumn()
 	{
 		return $this->column;
 	}
@@ -78,7 +90,7 @@ class Measure
 	 * @return string
 	 * @since 0.1.0
 	 */
-	public function get_aggregator()
+	public function getAggregator()
 	{
 		return $this->aggregator;
 	}
@@ -89,9 +101,9 @@ class Measure
 	 * @return string
 	 * @since 0.1.0
 	 */
-	public function get_total_expression()
+	public function getTotalExpression()
 	{
-		return sprintf('%s(%s)', $this->aggregator, $this->column);
+		return sprintf('%s(`%s`)', $this->aggregator, $this->column);
 	}
 
 	/**
