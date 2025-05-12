@@ -19,7 +19,7 @@
 		"WP_TESTS_PHPUNIT_POLYFILLS_PATH": "/var/www/html/wp-content/plugins/pivotwoo/vendor/yoast/phpunit-polyfills"
 	},
 	"mappings": {
-		"wp-content/debug.log": "./debug.log"
+		"wp-content/debug.log": "./logs/debug.log"
 	},
 	"env": {
 		"development": {

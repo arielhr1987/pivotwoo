@@ -84,11 +84,13 @@ const buildRows = (nodes, col = 0, rows = [], currentRowIndex = 0, maxCols = 1) 
  * AxisRowTable component
  * This component is used to display a pivot grid axis.
  *
- * @param {Object[]} data - The data to display in the table.
+ * @param {Object} props
+ * @param {Object[]} props.data - The data to display in the table.
+ * @param {Object[]} props.props - Additional properties to be passed to the component.
  * @return {JSX.Element} - The rendered table component.
  * @constructor
  */
-const AxisRowHeader = ({data}) => {
+export default function AxisRowHeader({data, ...props}) {
 
 	data = [
 		{label: 'A'},
@@ -136,30 +138,28 @@ const AxisRowHeader = ({data}) => {
 	 */
 	return (
 		<div>
-		<table className="table table-axis table-axis-row">
-			<tbody>
-			{rows.map((row, rowIndex) => (
-				<tr key={rowIndex}>
-					{[...Array(maxCols)].map((_, colIndex) => {
-						const cell = row?.[colIndex];
-						if (!cell) return null;
+			<table className="table table-axis table-axis-row">
+				<tbody>
+				{rows.map((row, rowIndex) => (
+					<tr key={rowIndex}>
+						{[...Array(maxCols)].map((_, colIndex) => {
+							const cell = row?.[colIndex];
+							if (!cell) return null;
 
-						const props = {};
-						if (cell.rowSpan && cell.rowSpan > 1) props.rowSpan = cell.rowSpan;
-						if (cell.colSpan && cell.colSpan > 1) props.colSpan = cell.colSpan;
+							const props = {};
+							if (cell.rowSpan && cell.rowSpan > 1) props.rowSpan = cell.rowSpan;
+							if (cell.colSpan && cell.colSpan > 1) props.colSpan = cell.colSpan;
 
-						return (
-							<td key={colIndex} {...props}>
-								<AxisHeaderValue label={cell.label} />
-							</td>
-						);
-					})}
-				</tr>
-			))}
-			</tbody>
-		</table>
+							return (
+								<td key={colIndex} {...props}>
+									<AxisHeaderValue label={cell.label}/>
+								</td>
+							);
+						})}
+					</tr>
+				))}
+				</tbody>
+			</table>
 		</div>
 	);
 };
-
-export default AxisRowHeader;

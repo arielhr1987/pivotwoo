@@ -85,11 +85,12 @@ const countLeafNodes = (nodes) => {
 /**
  * AxisColumnTable component
  *
- * @param {Object[]} data - The data to be displayed in the table.
+ * @param {Object} props
+ * @param {Object[]} props.data - The data to be displayed in the table.
  * @return {JSX.Element} - The rendered table component.
  * @constructor
  */
-const AxisColumnHeader = ({data}) => {
+export default function AxisColumnHeader({data}) {
 	data = [
 		{label: 'A'},
 		{
@@ -158,5 +159,3 @@ const AxisColumnHeader = ({data}) => {
 		</div>
 	);
 };
-
-export default AxisColumnHeader;

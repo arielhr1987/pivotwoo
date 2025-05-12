@@ -1,15 +1,14 @@
-
-
 /**
  * AxisHeader component
  * This component is used to display the pivot grid axis headers.
  *
- * @param {Array} label - The data to be displayed in the axis headers.
- * @param {Object} props - Additional properties to be passed to the component.
+ * @param {Object} props
+ * @param {string} props.label - The data to be displayed in the axis headers.
+ * @param {Object} props.props - Additional properties to be passed to the component.
  * @return {JSX.Element} - The rendered component.
  * @constructor
  */
-function AxisHeaderValue({label, ...props}) {
+export default function AxisHeaderValue({label, ...props}) {
 
 	/**
 	 * Render
@@ -21,4 +20,3 @@ function AxisHeaderValue({label, ...props}) {
 	);
 }
 
-export default AxisHeaderValue;
