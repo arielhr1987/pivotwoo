@@ -43,6 +43,7 @@ function PivotGrid({...props}) {
 	 * States
 	 */
 	const [dragging, setDragging] = useState();
+	const [dragState, setDragState] = useState(null);
 	const [items, setItems] = useState({
 		filters: ["1", "2", "3"],
 		columns: ["4", "5", "6"],
@@ -69,97 +70,135 @@ function PivotGrid({...props}) {
 	}
 
 	const onDragStart = (event) => {
-		console.log('Drag started', event);
+		// console.log('Drag started', event);
 		const {active} = event;
 		const {id} = active;
 
-		setDragging(id);
+		setDragging(event?.active?.id);
 
 	}
 
 	const onDragOver = (event) => {
-		console.log('Drag over', event);
-		const {active, over, draggingRect} = event;
-		const {id} = active;
-		const {id: overId} = over;
+		// console.log('Drag over', event);
 
-		// Find the containers
-		const activeContainer = findContainer(id);
-		const overContainer = findContainer(overId);
+		const { active, over } = event;
+		if (!over) return;
 
-		if (
-			!activeContainer ||
-			!overContainer ||
-			activeContainer === overContainer
-		) {
-			return;
+		const activeId = active.id;
+		const overId = over.id;
+		// console.log('Over', overId);
+
+		const from = findContainer(activeId);
+		const to = findContainer(overId);
+
+		if (!from || !to) return;
+
+		if(to === 'rows'){
+			let t = 0;
 		}
 
-		setItems((prev) => {
-			const activeItems = prev[activeContainer];
-			const overItems = prev[overContainer];
+		const overItems = items[to];
+		const overIndex = overItems.indexOf(overId);
+		const placeholderIndex = overIndex >= 0 ? overIndex : overItems.length;
 
-			// Find the indexes for the items
-			const activeIndex = activeItems.indexOf(id);
-			const overIndex = overItems.indexOf(overId);
+		const activeItems = items[from];
+		const activeIndex = activeItems.indexOf(activeId);
 
-			let newIndex;
-			if (overId in prev) {
-				// We're at the root droppable of a container
-				newIndex = overItems.length + 1;
-			} else {
-				const isBelowLastItem =
-					over &&
-					overIndex === overItems.length - 1;
-				//&& draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
-
-				const modifier = isBelowLastItem ? 1 : 0;
-
-				newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
-			}
-
-			return {
-				...prev,
-				[activeContainer]: [
-					...prev[activeContainer].filter((item) => item !== active.id)
-				],
-				[overContainer]: [
-					...prev[overContainer].slice(0, newIndex),
-					items[activeContainer][activeIndex],
-					...prev[overContainer].slice(newIndex, prev[overContainer].length)
-				]
-			};
+		setDragState({
+			activeId,
+			from,
+			to,
+			overIndex: placeholderIndex,
+			activeIndex: activeIndex,
 		});
 	}
 
 	const onDragEnd = (event) => {
-		console.log('Drag ended', event);
-		const {active, over} = event;
-		const {id} = active;
-		const {id: overId} = over;
+		// console.log('Drag ended', event);
+		// const {active, over} = event;
+		// const {id} = active;
+		// const {id: overId} = over;
+		//
+		// const activeContainer = findContainer(id);
+		// const overContainer = findContainer(overId);
+		//
+		// if (
+		// 	!activeContainer ||
+		// 	!overContainer ||
+		// 	activeContainer !== overContainer
+		// ) {
+		// 	return;
+		// }
+		//
+		// const activeIndex = items[activeContainer].indexOf(active.id);
+		// const overIndex = items[overContainer].indexOf(overId);
+		//
+		// if (activeIndex !== overIndex) {
+		// 	setItems((items) => ({
+		// 		...items,
+		// 		[overContainer]: arrayMove(items[overContainer], activeIndex, overIndex)
+		// 	}));
+		// }
+		//
+		// setDragging(null);
 
-		const activeContainer = findContainer(id);
-		const overContainer = findContainer(overId);
+		// console.log('Drag ended', event);
+		const { active, over } = event;
+		setDragging(null);
+		setDragState(null);
 
-		if (
-			!activeContainer ||
-			!overContainer ||
-			activeContainer !== overContainer
-		) {
+		if (!over){
 			return;
 		}
 
-		const activeIndex = items[activeContainer].indexOf(active.id);
-		const overIndex = items[overContainer].indexOf(overId);
+		const activeId = active.id;
+		const overId = over.id;
 
-		if (activeIndex !== overIndex) {
-			setItems((items) => ({
-				...items,
-				[overContainer]: arrayMove(items[overContainer], activeIndex, overIndex)
-			}));
+		const from = findContainer(activeId);
+		const to = findContainer(overId);
+
+		//No source or destination
+		if (!from || !to) return;
+
+		const fromItems = items[from];
+		const toItems = items[to];
+
+		const fromIndex = fromItems.indexOf(activeId);
+		const overIndex = toItems.indexOf(overId);
+
+		const insertIndex = overIndex >= 0 ? overIndex : toItems.length;
+
+		// Avoid modifying if same position
+		if (from === to && fromIndex === insertIndex) return;
+
+		if(from === to){
+			//this is a reorder
+			//return;
 		}
 
-		setDragging(null);
+		setItems((prev) => {
+			if(from === to){
+				//this is a reorder
+				const updatedFrom = prev[from].filter((item) => item !== activeId);
+				updatedFrom.splice(insertIndex, 0, activeId);
+				return {
+					...prev,
+					[from]: updatedFrom,
+				};
+			}else{
+
+				//this is a move
+				const updatedFrom = prev[from].filter((item) => item !== activeId);
+				const updatedTo = [...prev[to]];
+				updatedTo.splice(insertIndex, 0, activeId);
+
+				return {
+					...prev,
+					[from]: updatedFrom,
+					[to]: updatedTo,
+				};
+			}
+		});
 	}
 
 	return <Fragment>
@@ -171,6 +210,10 @@ function PivotGrid({...props}) {
 				onDragStart={onDragStart}
 				onDragOver={onDragOver}
 				onDragEnd={onDragEnd}
+				onDragCancel={() => {
+					setDragging(null);
+					setDragState(null);
+				}}
 			>
 				{/*<PivotGridHeader />*/}
 				{/*<PivotGridBody />*/}
@@ -201,17 +244,17 @@ function PivotGrid({...props}) {
 						<tr>
 							<td>
 								{/*Measure zone*/}
-								<SortableList id="columns" items={items.measures}/>
+								<SortableList id="measures" dragState={dragState} items={items.measures}/>
 							</td>
 							<td>
 								{/*Columns dimension zone*/}
-								<SortableList id="columns" items={items.columns}/>
+								<SortableList id="columns" dragState={dragState} items={items.columns}/>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								{/*Rows dimension zone*/}
-								<SortableList id="rows" items={items.rows}/>
+								<SortableList id="rows" dragState={dragState} items={items.rows}/>
 							</td>
 							<td>
 								<AxisColumnHeader/>

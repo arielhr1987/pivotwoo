@@ -2,6 +2,7 @@ import React from 'react';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {Item} from "./test/SortableItem";
+import {useDraggable} from "@dnd-kit/core";
 
 /**
  * SortableItem component represents an individual item within a sortable list.
@@ -43,7 +44,7 @@ import {Item} from "./test/SortableItem";
 // }
 
 export function ItemEl(props) {
-	const { id } = props;
+	const {id} = props;
 
 	const style = {
 		width: "100%",
@@ -59,23 +60,44 @@ export function ItemEl(props) {
 
 	return <div style={style}>{id}</div>;
 }
+
 export default function SortableItem(props) {
+
+	// const sortable = useSortable({id: props.id});
+	// console.log(sortable);
+	//
+	// if (sortable.overIndex === sortable.newIndex) {
+	// 	if(sortable?.transform?.x !== 0){
+	// 		console.log(sortable.transform);
+	// 	}
+	// }
+
 	const {
 		attributes,
 		listeners,
 		setNodeRef,
 		transform,
-		transition
-	} = useSortable({ id: props.id });
+		index,
+		over,
+		isDragging,
+		transition,
+		...sortableProps
+	} = useSortable({id: props.id});
 
 	const style = {
 		transform: CSS.Transform.toString(transform),
-		transition
+		transition,
+		// transform: 'none',
+		// transition: isDragging ? 'none' : transition,
+		// opacity: isDragging ? 0.5 : 1,
 	};
 
 	return (
-		<div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-			<ItemEl id={props.id} />
+		<div ref={setNodeRef}
+			 style={style}
+			 {...attributes}
+			 {...listeners}>
+			<ItemEl id={props.id}/>
 		</div>
 	);
 }

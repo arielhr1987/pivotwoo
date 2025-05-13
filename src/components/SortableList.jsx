@@ -1,4 +1,4 @@
-import {SortableContext, horizontalListSortingStrategy} from '@dnd-kit/sortable';
+import {SortableContext, horizontalListSortingStrategy, useSortable} from '@dnd-kit/sortable';
 import {useDroppable} from "@dnd-kit/core";
 import React from 'react';
 import SortableItem from "./SortableItem";
@@ -14,11 +14,15 @@ import SortableItem from "./SortableItem";
  * @param {React.ReactNode} props.children - The list items to be rendered.
  * @returns {JSX.Element}
  */
-export default function SortableList({id, items, type, children}) {
+export default function SortableList({id, items, type, dragState, children}) {
 
-	const { setNodeRef } = useDroppable({
+	const {
+		setNodeRef,
+	} = useDroppable({
 		id
 	});
+
+
 
 	return (
 		<SortableContext
@@ -27,9 +31,53 @@ export default function SortableList({id, items, type, children}) {
 			strategy={horizontalListSortingStrategy}
 		>
 			<div ref={setNodeRef} className={'zone'}>
-				{items.map((id) => (
-					<SortableItem key={id} id={id} />
-				))}
+				{
+					items.map((itemId, index) => {
+
+						const isPlaceholder = false;
+						// const isPlaceholder = dragState && dragState.overIndex === index;
+						// const isPlaceholder = dragState
+						// 	//&& dragState.to === id
+						// 	//&& dragState.activeId !== itemId
+						// 	&& dragState.overIndex === index
+						// ;
+
+						let position = null;
+						if (dragState) {
+							if(dragState.activeIndex > dragState.overIndex){
+								position = 'left';
+							}else if(dragState.activeIndex < dragState.overIndex){
+								position = 'right';
+							}
+							//console.log(position, 'overIndex', dragState.overIndex, 'index', dragState.activeIndex);
+						}
+
+						return (
+							<React.Fragment key={itemId}>
+								{isPlaceholder && position === 'left' && (
+									<div className="placeholder" style={{
+										height: 50,
+										border: '2px dashed #999',
+										margin: '10px 0',
+										background: '#f0f0f0'
+									}}>
+										{dragState.activeId}
+									</div>
+								)}
+								<SortableItem id={itemId}/>
+								{isPlaceholder && position === 'right' && (
+									<div className="placeholder" style={{
+										height: 50,
+										border: '2px dashed #999',
+										margin: '10px 0',
+										background: '#f0f0f0'
+									}}>
+										{dragState.activeId}
+									</div>
+								)}
+							</React.Fragment>
+						);
+					})}
 			</div>
 		</SortableContext>
 	);

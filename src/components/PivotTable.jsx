@@ -52,7 +52,7 @@ export default function PivotTable({ initialItems }) {
 	};
 
 	const handleDragStart = (event) => {
-		console.log('Drag started', event);
+		//console.log('Drag started', event);
 		const { active } = event;
 		const containerId = findContainer(active.id);
 		const item = lists[containerId].items.find((i) => i.id === active.id);
@@ -61,15 +61,15 @@ export default function PivotTable({ initialItems }) {
 	};
 
 	const handleDragEnd = (event) => {
-		console.log('Drag ended', event);
+		//console.log('Drag ended', event);
 		const { active, over } = event;
 		if (!over) return;
 
 		const activeContainer = findContainer(active.id);
 		const overContainer = findContainer(over.id);
 
-		console.log('activeContainer', activeContainer);
-		console.log('overContainer', overContainer);
+		//console.log('activeContainer', activeContainer);
+		//console.log('overContainer', overContainer);
 
 		if (!activeContainer || !overContainer) return;
 
