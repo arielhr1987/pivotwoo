@@ -82,15 +82,22 @@ export default function SortableItem(props) {
 		isDragging,
 		transition,
 		...sortableProps
-	} = useSortable({id: props.id});
+	} = useSortable({
+		id: props.id,
+		data: {
+			type: 'type1',
+		}
+	});
 
 	const style = {
-		transform: CSS.Transform.toString(transform),
-		transition,
-		// transform: 'none',
-		// transition: isDragging ? 'none' : transition,
-		// opacity: isDragging ? 0.5 : 1,
+		// transform: CSS.Transform.toString(transform),
+		// transition,
+		transform: 'none',
+		transition: isDragging ? 'none' : transition,
+		opacity: isDragging ? 0.5 : 1,
 	};
+
+	console.log(transform);
 
 	return (
 		<div ref={setNodeRef}

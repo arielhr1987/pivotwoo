@@ -10,27 +10,25 @@ import SortableItem from "./SortableItem";
  * @param {Object} props
  * @param {string} props.id - Unique identifier for the list.
  * @param {Array} props.items - Array of items to be rendered and sorted.
- * @param {string} props.type - Type of items in the list ('dimension' or 'measure').
+ * @param {string[]|string} props.accepts - The types of draggable elements accepted ['dimension'|'measure'].
  * @param {React.ReactNode} props.children - The list items to be rendered.
  * @returns {JSX.Element}
  */
-export default function SortableList({id, items, type, dragState, children}) {
-
+export default function SortableList({id, items, type, dragState, accepts, children}) {
 	const {
 		setNodeRef,
 	} = useDroppable({
-		id
+		id,
+		data: {
+			//the types of draggable elements this droppable accepts
+			accepts: Array.isArray(accepts) ? accepts : [accepts],
+		},
 	});
 
-
-
 	return (
-		<SortableContext
-			id={id}
-			items={items}
-			strategy={horizontalListSortingStrategy}
-		>
-			<div ref={setNodeRef} className={'zone'}>
+		<div ref={setNodeRef} className={'zone'}>
+			<SortableContext id={id} items={items} strategy={horizontalListSortingStrategy}>
+				{/*<div className={'zone'}>*/}
 				{
 					items.map((itemId, index) => {
 
@@ -44,9 +42,9 @@ export default function SortableList({id, items, type, dragState, children}) {
 
 						let position = null;
 						if (dragState) {
-							if(dragState.activeIndex > dragState.overIndex){
+							if (dragState.activeIndex > dragState.overIndex) {
 								position = 'left';
-							}else if(dragState.activeIndex < dragState.overIndex){
+							} else if (dragState.activeIndex < dragState.overIndex) {
 								position = 'right';
 							}
 							//console.log(position, 'overIndex', dragState.overIndex, 'index', dragState.activeIndex);
@@ -78,7 +76,7 @@ export default function SortableList({id, items, type, dragState, children}) {
 							</React.Fragment>
 						);
 					})}
-			</div>
-		</SortableContext>
+			</SortableContext>
+		</div>
 	);
 }

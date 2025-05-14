@@ -8,12 +8,14 @@ import * as Woo from '@woocommerce/components';
 import {Fragment} from '@wordpress/element';
 import PivotGrid from './PivotGrid';
 import PivotTable from "./components/PivotTable";
+import Test from "./components/test/simpletest";
+import Table from "./components/test/Table";
+import DndExample from "./components/test/test2";
 
 /**
  * Internal dependencies
  */
 import './index.scss';
-import Table from "./components/test/Table";
 
 const MyExamplePage = () => {
 
@@ -69,6 +71,8 @@ const MyExamplePage = () => {
 		{/*<PivotTable initialItems={initialItems}/>*/}
 		<PivotGrid/>
 		{/*<Table/>*/}
+		{/*{<Test/>}*/}
+		<DndExample/>
 
 		{/*<Woo.Section component="article">*/}
 		{/*	<Woo.SectionHeader title={__('Table', 'pivotwoo')}/>*/}

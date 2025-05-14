@@ -78,10 +78,15 @@ function PivotGrid({...props}) {
 
 	}
 
-	const onDragOver = (event) => {
-		// console.log('Drag over', event);
+	const onDragMove = (event) => {
+		console.log('Drag move', event);
+		// console.log('Drag move', event.delta.x);
+	}
 
-		const { active, over } = event;
+	const onDragOver = (event) => {
+		console.log('Drag over', event);
+
+		const {active, over} = event;
 		if (!over) return;
 
 		const activeId = active.id;
@@ -93,7 +98,7 @@ function PivotGrid({...props}) {
 
 		if (!from || !to) return;
 
-		if(to === 'rows'){
+		if (to === 'rows') {
 			let t = 0;
 		}
 
@@ -142,14 +147,21 @@ function PivotGrid({...props}) {
 		//
 		// setDragging(null);
 
-		// console.log('Drag ended', event);
-		const { active, over } = event;
+		console.log('Drag ended', event);
+		const {active, over} = event;
 		setDragging(null);
 		setDragState(null);
 
-		if (!over){
+		if (!over) {
 			return;
 		}
+
+		/**
+		 * Accept only those draggable elements allowed in the droppable area
+		 */
+		//if (over && over.data.current.accepts.includes(active.data.current.type)) {
+			// do stuff
+		//}
 
 		const activeId = active.id;
 		const overId = over.id;
@@ -171,13 +183,13 @@ function PivotGrid({...props}) {
 		// Avoid modifying if same position
 		if (from === to && fromIndex === insertIndex) return;
 
-		if(from === to){
+		if (from === to) {
 			//this is a reorder
 			//return;
 		}
 
 		setItems((prev) => {
-			if(from === to){
+			if (from === to) {
 				//this is a reorder
 				const updatedFrom = prev[from].filter((item) => item !== activeId);
 				updatedFrom.splice(insertIndex, 0, activeId);
@@ -185,7 +197,7 @@ function PivotGrid({...props}) {
 					...prev,
 					[from]: updatedFrom,
 				};
-			}else{
+			} else {
 
 				//this is a move
 				const updatedFrom = prev[from].filter((item) => item !== activeId);
@@ -208,6 +220,7 @@ function PivotGrid({...props}) {
 				sensors={sensors}
 				collisionDetection={closestCorners}
 				onDragStart={onDragStart}
+				onDragMove={onDragMove}
 				onDragOver={onDragOver}
 				onDragEnd={onDragEnd}
 				onDragCancel={() => {
@@ -234,6 +247,12 @@ function PivotGrid({...props}) {
 						<tr>
 							<td colSpan="2">
 								Waiting zone
+								<SortableList
+									id="measures"
+									dragState={dragState}
+									accepts={['measure', 'dimension']}
+									items={[]}
+								/>
 							</td>
 						</tr>
 						<tr>
@@ -244,17 +263,32 @@ function PivotGrid({...props}) {
 						<tr>
 							<td>
 								{/*Measure zone*/}
-								<SortableList id="measures" dragState={dragState} items={items.measures}/>
+								<SortableList
+									id="measures"
+									dragState={dragState}
+									accepts={'measure'}
+									items={items.measures}
+								/>
 							</td>
 							<td>
 								{/*Columns dimension zone*/}
-								<SortableList id="columns" dragState={dragState} items={items.columns}/>
+								<SortableList
+									id="columns"
+									dragState={dragState}
+									accepts={'dimension'}
+									items={items.columns}
+								/>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								{/*Rows dimension zone*/}
-								<SortableList id="rows" dragState={dragState} items={items.rows}/>
+								<SortableList
+									id="rows"
+									dragState={dragState}
+									accepts={'dimension'}
+									items={items.rows}
+								/>
 							</td>
 							<td>
 								<AxisColumnHeader/>
@@ -284,7 +318,9 @@ function PivotGrid({...props}) {
 						</tbody>
 					</table>
 				</div>
-				<DragOverlay>{dragging ? <ItemEl id={dragging}/> : null}</DragOverlay>
+				<DragOverlay dropAnimation={null}>
+					{dragging ? <ItemEl id={dragging}/> : null}
+				</DragOverlay>
 			</DndContext>
 		</PivotGridContextProvider>
 	</Fragment>
